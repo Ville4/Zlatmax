@@ -1,0 +1,142 @@
+@use "sass:math";
+
+@import "mixins";
+@import "fonts";
+@import "icons";
+@import "swiper";
+@import "range";
+
+//  При подключении через плагин добавить &display=swap
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,600,700&display=swap");
+
+
+// Шрифт по умолчанию
+$fontFamily: "Montserrat";
+//Размер Шрифта по умолчанию 
+$fontSize: rem(18);
+// Основной цвет
+$mainColor: #000;
+
+/*=====================================================================================*/
+
+// Минимальная ширина страницы
+$minwidth: 320;
+//Ширина макета
+$maxwidth: 1920;
+// Ширина огранич. контейнера
+$maxwidthContainer: 1590;
+// Общий отступ контейнера (слева+справа)
+$containerPadding: 30;
+
+// Тип адаптива
+// 1 - отзывчивый (нет брейкпоинтов)
+// 2 - по брейкпоинтам
+$responsiveType: 1;
+
+// Ширина срабатывания первого брейкпоинта
+$containerWidth: $maxwidthContainer + $containerPadding;
+
+//Брейкпоинты
+$pc: em($containerWidth); // ПК, ноутбуки
+$tablet: em(991.98); // Планшеты + некоторые телефоны в горизонтали
+$mobile: em(767.98); // Телефоны L
+$mobileSmall: em(479.98); // Телефоны S
+
+/*=======================================================================================*/
+
+// Обнуление 
+@import "null";
+
+body {
+    overflow-x: hidden;
+	font-weight: 500;
+	// Скролл заблокирован
+	&._lock {
+		overflow: hidden;
+		//touch-action: none;
+	}
+}
+/*=======================================================================================*/
+
+// Оболочка
+.wrapper {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	// Сайт загружен
+	.loaded & {
+	}
+	// Прижимаем footer
+	> main {
+		flex: 1 1 auto;
+	}
+	// Фикс для слайдеров
+	> * {
+		min-width: 0;
+	}
+}
+/*=========================================================================================*/
+
+// Огранич. контейнер
+
+@if ($responsiveType == 1) {
+    // отзывчивая
+    [class*="__container"] {
+        @if ($maxwidthContainer > 0) {
+            max-width: rem($maxwidthContainer);
+            margin: 0 auto;
+            box-sizing: content-box;
+        }
+        @if ($containerPadding > 0) {
+           padding: 0 rem(math.div($containerPadding, 2)); 
+        }
+    }
+} @else {
+    // по бреикпоинтам
+    [class*="__container"] {
+        margin: 0 auto;
+        @if ($maxwidthContainer > 0 ) {
+            max-width: rem($maxwidthContainer);
+            box-sizing: content-box;
+        } @else {
+            @if ($containerPadding > 0) {
+                padding: 0 rem(math.div($containerPadding, 2)); 
+            }
+        }
+        @media (max-width: $pc) {
+            max-width: rem(970);
+        }
+        @media (max-width: $tablet) {
+            max-width: rem(750);
+        }
+        @media (max-width: $mobile) {
+            max-width: none;
+            @if ($containerPadding>0 and $maxWidthContainer>0) {
+                padding: 0 rem(math.div($containerPadding, 2));
+            }
+        }
+    }    
+}
+/*========================================================================================*/
+
+// Header
+@import "header";
+
+// main-page
+@import "main-page";
+
+// products-slider
+@import "products-slider";
+
+// products-new
+@import "products-new";
+
+// footer
+@import "footer";
+
+// catalog
+@import "catalog";
+
+// product
+@import "product";
