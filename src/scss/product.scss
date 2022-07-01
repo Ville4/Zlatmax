@@ -199,7 +199,7 @@
 		font-weight: 700;
 		display: inline-block;
 		line-height: math.div(37, 30);
-		background: url("/img/icons/rub.svg") right no-repeat;
+		background: url("../img/icons/rub.svg") right no-repeat;
 		padding: 0px rem(30) 0px 0px;
 		&:not(:last-child) {
 			margin-bottom: em(35, 30);
